@@ -5,6 +5,8 @@ import time
 p.setup(timestep=0.01, quit_on_end=False)
 
 def exercise1():
+    figure(figsize=(10,6))
+
     hugs = p.Population(1, cellclass=p.HH_cond_exp)
     dcsource = p.DCSource(amplitude=1., start=100., stop=600)
     dcsource.inject_into(hugs)
@@ -17,15 +19,18 @@ def exercise1():
     pot = hugs.get_v()
     spikes = hugs.getSpikes()
 
-    plot(pot[:,1], pot[:,2])
-    plot(spikes[:,1], [-40]*len(spikes), '.', color='r')
-    line = axhline(y=-40, xmin=0, xmax=len(pot[:,1]), color='r')
+    plt = plot(pot[:,1], pot[:,2])
+    spks = plot(spikes[:,1], [52]*len(spikes), 'D', color='r')
     xlabel('Time/ms')
     ylabel('Current/mV')
+    legend((plt, spks), ('Membrane potential', 'Spike times'))
+    title('Hodgkin-Huxley model neuron')
     savefig('../output/day4_figure1.png')
     show()
 
 def exercise2():
+  figure(figsize=(10,6))
+
   hugs = p.Population(1, cellclass=p.HH_cond_exp)
   start = 100.
   stop = 1100.
@@ -41,12 +46,14 @@ def exercise2():
     frequency.append(len(spikes) / (stop - start))
     p.reset() 
   plot(currentSpace, frequency)
+  title('Current-frequency diagram for a HH model neuron')
   xlabel('Current/nA')
   ylabel('Frequency/kHz')
   savefig('../output/day4_figure2.png')
   show()
     
 def exercise3():
+  figure(figsize=(10,6))
   p.setup(quit_on_end=False, timestep=0.01)
   iandf = p.Population(1, cellclass=p.IF_cond_exp)
   dcsource = p.DCSource(amplitude=1., start=100., stop=1000.)
@@ -56,11 +63,12 @@ def exercise3():
   p.run(1200.)
   pot = iandf.get_v()
   spikes = iandf.getSpikes()
-  plot(pot[:,1], pot[:,2], color='b')
-  plot(spikes[:,1], [-60]*len(spikes), '.', color='r')
-  line = axhline(y=-60, xmin=0, xmax=len(pot[:,1]), color='r')
+  plt = plot(pot[:,1], pot[:,2], color='b')
+  spks = plot(spikes[:,1], [-49]*len(spikes), '.', color='r')
+  legend((plt, spks), ('Membrane potential', 'Spike times'))
   xlabel('Time/ms')
   ylabel('Current/mV')
+  title('Integrate and fire model neuron')
   savefig('../output/day4_figure3.png')
   show()
   
