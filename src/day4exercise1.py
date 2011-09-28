@@ -184,12 +184,6 @@ def exercise5_varThreshold():
   savefig('../output/day4_figure7.png')
   show()
   
-
-  
-  
-  
-  
-  
 #if (__name__ == '__main__'): exercise5_curves()
      
         
